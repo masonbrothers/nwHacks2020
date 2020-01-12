@@ -78,7 +78,7 @@ function getEmojiAndPost(sentence){
 }
 */
 function getEmojiAndPost(sentence){
-    console.log(sentence);
+    //console.log(sentence);
     var emojiCODE ="";
     if (sentence == "Joy"){emojiCODE = "\uD83D\uDE00"}
     else if (sentence == "Anger"){emojiCODE = "\uD83D\uDE20" }
@@ -86,8 +86,8 @@ function getEmojiAndPost(sentence){
     else if (sentence == "Sadness"){emojiCODE = "\uD83D\uDE29" }
     else if (sentence == "Fear"){emojiCODE = "\uD83D\uDE31" }
     else if (sentence == "Tentative"){ emojiCODE = "\uD83D\uDE1F"}
-    else if (sentence == "Confident"){ emojiCODE = "\uD83D\uDE00"}
-    else {emojiCODE = "no associated emotion"}
+    else if (sentence == "Confident"){ emojiCODE = "\ud83d\ude0e"}
+    else {emojiCODE = "\uD83D\uDE10"}
     return emojiCODE;
 }
 
