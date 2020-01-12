@@ -42,6 +42,11 @@ function sendToPython(messages)
 function sendSingular(text){
     const xhttp = new XMLHttpRequest();
     let url = "http://localhost:8000/?text="+ encodeURI(text)
+    xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == XMLHttpRequest.DONE) {
+        alert(getEmojiAndPost(xhttp.responseText));
+    }
+}
     xhttp.open("GET", url, true)
     // xhttp.withCredentials = true;
     // xhttp.setRequestHeader("Content-Type", "application/json");
@@ -50,14 +55,14 @@ function sendSingular(text){
 
 }
 
-function getEmojiAndPost(word){
+function getEmojiAndPost(sentence){
     var emojiCODE ="";
-    if (sentence == "HAPPY"){emojiCODE = "U+1F600"}
-    else if (sentence == "ANGRY"){emojiCODE = "U+1F620" }
-    else if (sentence == "EXCITED"){ emojiCODE = "U+1F929"}
-    else if (sentence == "SAD"){emojiCODE = "U+1F629" }
-    else if (sentence == "FEAR"){emojiCODE = "U+1F631" }
-    else if (sentence == "BORED"){ emojiCODE = "U+1F634"}
+    if (sentence == "Happy"){emojiCODE = "U+1F600"}
+    else if (sentence == "Angry"){emojiCODE = "U+1F620" }
+    else if (sentence == "Excited"){ emojiCODE = "U+1F929"}
+    else if (sentence == "Sad"){emojiCODE = "U+1F629" }
+    else if (sentence == "Fear"){emojiCODE = "U+1F631" }
+    else if (sentence == "Bored"){ emojiCODE = "U+1F634"}
     else {emojiCODE = "no associated emotion"}
     return emojiCODE;
 }
