@@ -1,15 +1,8 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-#import paralleldots
-#import operator
-
-
 from ibm_watson import ToneAnalyzerV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-
-
-#paralleldots.set_api_key("cJNuFaRhYXRPQPsh19ohGql5hpChB4TBUSt7Y2DRjOk")
 
 def get_emotion(text):
     
@@ -29,20 +22,6 @@ def get_emotion(text):
         tones = tone_analysis['document_tone']['tones'][0]['tone_name']
     #print(tones)
     return tones
-
-#def get_emotion(text):
-    #emotion_list = paralleldots.emotion(text)['emotion']
-    #max_emotion = max(emotion_list.items(), key=operator.itemgetter(1))[0]
-    #print(max_emotion)
-    #return max_emotion
-    
-
-# def get_sentiment(text):
-#     print(text)
-#     try:
-#         return text # b'getting sentement'
-#     except:
-#         return b'{"error": "cant get sentement"}'
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):
 
