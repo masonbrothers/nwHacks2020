@@ -4,7 +4,27 @@ from urllib.parse import urlparse, parse_qs
 import paralleldots
 import operator
 
+
+from ibm_watson import ToneAnalyzerV3
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+
 paralleldots.set_api_key("cJNuFaRhYXRPQPsh19ohGql5hpChB4TBUSt7Y2DRjOk")
+def get_emotion_IBM(text):
+    authenticator = IAMAuthenticator('YhhKS3QwimiLpt-d1WGsXQh2l0OaOiPGe15JXdPhvvTl')
+ 
+    tone_analyzer = ToneAnalyzerV3(
+        version='2017-09-21',
+        authenticator=authenticator
+    )   
+    tone_analyzer.set_service_url('https://api.us-east.tone-analyzer.watson.cloud.ibm.com/instances/ca94d54e-1098-4957-b878-56061dc67816')
+    tone_analysis = tone_analyzer.tone(
+        {'text': text},
+        content_type='application/json'
+    ).get_result()
+
+    tones = tone_analysis['document_tone']['tones'][0]['tone_name']
+    print(tones)
 
 def get_emotion(text):
     emotion_list = paralleldots.emotion(text)['emotion']
