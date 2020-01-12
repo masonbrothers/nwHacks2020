@@ -42,10 +42,13 @@ function sendToPython(messages)
     }
 
 }
-
+const xhttp = new XMLHttpRequest();
 function sendSingular(text){
+
     let url = "localhost:8000/?text="+ encodeURI(text)
     xhttp.open("GET", url, true)
+    xhttp.send()
+
 }
 
 function getEmojiAndPost(word){
