@@ -9,37 +9,28 @@
 }
 */
 
-$(window).on('load', function(){
-    window.setTimeout(getMessages, 5000)});
 
+
+$(window).on('load', function() {
+    window.setTimeout(getMessages, 5000)
+});
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+}
 
 function getMessages(){
     var messages = [];
-    var JSONMessages = [];
-    document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div').querySelectorAll('.direction_ltr, .text_align_ltr')
-        .forEach(function(div) {
-
-                let query = div.querySelector('div[tabindex] > span');
-                if (query) {
-                    //messages.push(query.innerText)
-                    JSONMessages.push(JSON.stringify(query.innerText))
-                    sendSingular((query.innerText),div)
-                }
-                
-            })
-            let length = messages.length
-            /*for (var i = 0; i<length;i++) {
-                JSONMessages[i] = JSON.stringify(messages[i]);
-            }
-            //sendToPython(JSONMessages, div); */
-}
-
-function sendToPython(messages, div)
-{
-    for(var i = 0; i<messages.length;i++) {
-        sendSingular(messages[i], div)
-        ;
-    }
+    let divs = document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div').querySelectorAll('.direction_ltr, .text_align_ltr');
+    asyncForEach(divs, async function(div) {
+        let query = div.querySelector('div[tabindex] > span');
+        if (query) {
+            sendSingular((query.innerText),div)
+        }
+    })
+    let length = messages.length;
 }
 
 function sendSingular(text, div){
