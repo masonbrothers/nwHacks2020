@@ -1,0 +1,29 @@
+function getSelectionText() {
+    var text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+
+window.addEventListener('mouseup', e => {
+    setEmoji(e);
+    getSelectionText();
+});
+
+
+function setEmojis(messageLocations){
+    foreach(setEmoji())
+}
+function setEmoji(mouseLocation) {
+    x = mouseLocation.screenX;
+    y = mouseLocation.screenY;
+    x = x + 10;
+    y = y + 10;
+
+}
+
+
+
