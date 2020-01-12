@@ -18,24 +18,27 @@ function getMessages(){
     var JSONMessages = [];
     document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div').querySelectorAll('.direction_ltr, .text_align_ltr')
         .forEach(function(div) {
+
                 let query = div.querySelector('div[tabindex] > span');
                 if (query) {
-                    messages.push(query.innerText)
+                    //messages.push(query.innerText)
+                    JSONMessages.push(JSON.stringify(query.innerText))
+                    sendSingular((query.innerText),div)
                 }
                 
             })
             let length = messages.length
-            for (var i = 0; i<length;i++) {
+            /*for (var i = 0; i<length;i++) {
                 JSONMessages[i] = JSON.stringify(messages[i]);
             }
-            sendToPython(JSONMessages, div);
+            //sendToPython(JSONMessages, div); */
 }
 
 function sendToPython(messages, div)
 {
     for(var i = 0; i<messages.length;i++) {
         sendSingular(messages[i], div)
-        i++;
+        ;
     }
 }
 
