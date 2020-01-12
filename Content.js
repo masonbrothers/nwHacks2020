@@ -29,24 +29,23 @@ function getMessages(){
                 JSONMessages[i] = JSON.stringify(messages[i]);
             }
             sendToPython(JSONMessages);
-
-
-
-
 }
 
 function sendToPython(messages)
 {
-    for(var i = 0; i<messages.length;i++){
+    for(var i = 0; i<messages.length;i++) {
         sendSingular(messages[i])
+        i++;
     }
-
 }
-const xhttp = new XMLHttpRequest();
-function sendSingular(text){
 
-    let url = "localhost:8000/?text="+ encodeURI(text)
+function sendSingular(text){
+    const xhttp = new XMLHttpRequest();
+    let url = "http://localhost:8000/?text="+ encodeURI(text)
     xhttp.open("GET", url, true)
+    // xhttp.withCredentials = true;
+    // xhttp.setRequestHeader("Content-Type", "application/json");
+    // xhttp.send({ 'request': "authentication token" });
     xhttp.send()
 
 }

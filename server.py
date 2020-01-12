@@ -41,7 +41,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         else:
             self.wfile.write(b'{"error": "is text param not specified in get request"}')
     def end_headers (self):
-        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Origin', 'https://www.messenger.com')
         SimpleHTTPRequestHandler.end_headers(self)
 
 
