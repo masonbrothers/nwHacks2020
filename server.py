@@ -1,17 +1,18 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-import paralleldots
-import operator
+#import paralleldots
+#import operator
 
 
 from ibm_watson import ToneAnalyzerV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 
-paralleldots.set_api_key("cJNuFaRhYXRPQPsh19ohGql5hpChB4TBUSt7Y2DRjOk")
-def get_emotion_IBM(text):
-    authenticator = IAMAuthenticator('YhhKS3QwimiLpt-d1WGsXQh2l0OaOiPGe15JXdPhvvTl')
+#paralleldots.set_api_key("cJNuFaRhYXRPQPsh19ohGql5hpChB4TBUSt7Y2DRjOk")
+authenticator = IAMAuthenticator('YhhKS3QwimiLpt-d1WGsXQh2l0OaOiPGe15JXdPhvvTl')
+def get_emotion(text, authenticator):
+    
  
     tone_analyzer = ToneAnalyzerV3(
         version='2017-09-21',
@@ -25,12 +26,14 @@ def get_emotion_IBM(text):
 
     tones = tone_analysis['document_tone']['tones'][0]['tone_name']
     print(tones)
+    return tones
 
-def get_emotion(text):
-    emotion_list = paralleldots.emotion(text)['emotion']
-    max_emotion = max(emotion_list.items(), key=operator.itemgetter(1))[0]
-    print(max_emotion)
-    return max_emotion
+#def get_emotion(text):
+    #emotion_list = paralleldots.emotion(text)['emotion']
+    #max_emotion = max(emotion_list.items(), key=operator.itemgetter(1))[0]
+    #print(max_emotion)
+    #return max_emotion
+    
 
 # def get_sentiment(text):
 #     print(text)
@@ -54,7 +57,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             print(text_array)
             if len(text_array) == 1:
                 text_str = text_array[0]
-                response = get_emotion(text_str)
+                response = get_emotion(text_str, authenticator)
                 self.wfile.write(str.encode(response))
             else:
                 self.wfile.write(b'{"error": "text param must be exacly 1 element not an array"}')
