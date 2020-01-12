@@ -1,5 +1,21 @@
+let runGetMessages = true;
+
 $(window).on('load', function() {
-    window.setTimeout(getMessages, 1000)
+    setInterval(async function(){
+        try {
+            console.log(runGetMessages)
+            
+            if (runGetMessages) {
+                runGetMessages = false;
+                console.log(runGetMessages)
+                await getMessages();
+                runGetMessages = true;
+                console.log(runGetMessages)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }, 5000);
 });
 
 async function asyncForEach(array, callback) {
@@ -8,49 +24,39 @@ async function asyncForEach(array, callback) {
     }
 }
 
-let observer = new MutationObserver(function () {
-    console.log("B4")
-    getMessages();
-    console.log("After")
-});
-
-console.log(observer);
-
 let config = {attributes: true, childList: true, characterData: true};
 
 async function getMessages(){
-    console.log(observer);
-    observer.disconnect();
-    console.log(observer);
     let mainDiv = document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div');
     let divs = mainDiv.querySelectorAll('.direction_ltr, .text_align_ltr');
     await asyncForEach(divs, async function(div) {
         let query = div.querySelector('div[tabindex] > span');
         if (query) {
-            sendSingular((query.innerText),div)
+            await sendSingular((query.innerText),div)
         }
     });
-    console.log(observer);
-    observer.observe(mainDiv, config);
-    console.log(observer);
 }
 
-function sendSingular(text, div){
-    const xhttp = new XMLHttpRequest();
-    let url = "http://localhost:8000/?text="+ encodeURI(text)
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == XMLHttpRequest.DONE) {
-            let emoji = getEmojiAndPost(xhttp.responseText);
-            let span = document.createElement("span");
-            span.innerText = emoji;
-            span.className = "Emoji-Changer";
-            span.title = xhttp.responseText;
-            div.append(span);
-        }
-    };
-    xhttp.open("GET", url, true);
-    xhttp.send()
-
+async function sendSingular(text, div){
+    if (!div.querySelector('.Emoji-Changer') && text){
+        const xhttp = new XMLHttpRequest();
+        let url = "http://localhost:8000/?text="+ encodeURI(text)
+        xhttp.open("GET", url, true);
+        xhttp.send()
+        await new Promise(function (resolve, reject) { 
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    let emoji = getEmojiAndPost(xhttp.responseText);
+                    let span = document.createElement("span");
+                    span.innerText = emoji;
+                    span.className = "Emoji-Changer";
+                    span.title = xhttp.responseText;
+                    div.append(span);
+                    resolve();
+                }
+            };
+        });
+    }
 }
 
 function getEmojiAndPost(sentence){
