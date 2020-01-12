@@ -57,12 +57,12 @@ function sendSingular(text){
 
 function getEmojiAndPost(sentence){
     var emojiCODE ="";
-    if (sentence == "Happy"){emojiCODE = "U+1F600"}
-    else if (sentence == "Angry"){emojiCODE = "U+1F620" }
-    else if (sentence == "Excited"){ emojiCODE = "U+1F929"}
-    else if (sentence == "Sad"){emojiCODE = "U+1F629" }
-    else if (sentence == "Fear"){emojiCODE = "U+1F631" }
-    else if (sentence == "Bored"){ emojiCODE = "U+1F634"}
+    if (sentence == "Happy"){emojiCODE = "\uD83D\uDE00"}
+    else if (sentence == "Angry"){emojiCODE = "\uD83D\uDE20" }
+    else if (sentence == "Excited"){ emojiCODE = "\uD83E\uDD29" }
+    else if (sentence == "Sad"){emojiCODE = "\uD83D\uDE29" }
+    else if (sentence == "Fear"){emojiCODE = "\uD83D\uDE31" }
+    else if (sentence == "Bored"){ emojiCODE = "\uD83D\uDE34"}
     else {emojiCODE = "no associated emotion"}
     return emojiCODE;
 }
