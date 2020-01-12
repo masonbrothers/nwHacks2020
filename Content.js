@@ -22,29 +22,34 @@ function getMessages(){
                 if (query) {
                     messages.push(query.innerText)
                 }
-
+                
             })
             let length = messages.length
             for (var i = 0; i<length;i++) {
                 JSONMessages[i] = JSON.stringify(messages[i]);
             }
-            sendToPython(JSONMessages);
+            sendToPython(JSONMessages, div);
 }
 
-function sendToPython(messages)
+function sendToPython(messages, div)
 {
     for(var i = 0; i<messages.length;i++) {
-        sendSingular(messages[i])
+        sendSingular(messages[i], div)
         i++;
     }
 }
 
-function sendSingular(text){
+function sendSingular(text, div){
     const xhttp = new XMLHttpRequest();
     let url = "http://localhost:8000/?text="+ encodeURI(text)
     xhttp.onreadystatechange = function() {
     if (xhttp.readyState == XMLHttpRequest.DONE) {
-        alert(getEmojiAndPost(xhttp.responseText));
+        let emoji = getEmojiAndPost(xhttp.responseText);
+        let span = document.createElement("span");
+        span.innerText = emoji;
+        span.className = "Emoji-Changer";
+        span.title = xhttp.responseText;
+        div.append(span);
     }
 }
     xhttp.open("GET", url, true)
