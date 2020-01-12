@@ -28,10 +28,27 @@ function getMessages(){
             for (var i = 0; i<length;i++) {
                 JSONMessages[i] = JSON.stringify(messages[i]);
             }
+            sendToPython(JSONMessages);
+
+
 
 
 }
-function getEmoji(word){
+
+function sendToPython(messages)
+{
+    for(var i = 0; i<messages.length;i++){
+        sendSingular(messages[i])
+    }
+
+}
+
+function sendSingular(text){
+    let url = "localhost:8000/?text="+ encodeURI(text)
+    xhttp.open("GET", url, true)
+}
+
+function getEmojiAndPost(word){
     var emojiCODE ="";
     if (sentence == "HAPPY"){emojiCODE = "U+1F600"}
     else if (sentence == "ANGRY"){emojiCODE = "U+1F620" }

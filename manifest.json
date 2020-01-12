@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.messenger.com/t/*"],
-      "js": ["Content.js","Overlay.js"]
+        "js": ["jquery-3.4.1.min.js","Content.js","Overlay.js"]
     }
   ]
 
