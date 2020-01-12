@@ -9,18 +9,29 @@
 }
 */
 
+$(window).on('load', function(){
+    window.setTimeout(getMessages, 5000)});
+
+
 function getMessages(){
+    var messages = [];
+    var JSONMessages = [];
     document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div').querySelectorAll('.direction_ltr, .text_align_ltr')
         .forEach(function(div) {
                 let query = div.querySelector('div[tabindex] > span');
                 if (query) {
-                    console.log(query.innerText)
+                    messages.push(query.innerText)
                 }
+
+            })
+            let length = messages.length
+            for (var i = 0; i<length;i++) {
+                JSONMessages[i] = JSON.stringify(messages[i]);
             }
-        )
+
 
 }
-function getEmoji(sentence){
+function getEmoji(word){
     var emojiCODE ="";
     if (sentence == "HAPPY"){emojiCODE = "U+1F600"}
     else if (sentence == "ANGRY"){emojiCODE = "U+1F620" }
@@ -34,12 +45,16 @@ function getEmoji(sentence){
 
 
 
-window.addEventListener('mouseup', e => {
+  /*window.addEventListener('mouseup', e => {
     getMessages();
-    setEmojis(messages);
+    //setEmojis(messages);
 
 
-});
+});*/
+
+//$("body").on('DOMSubtreeModified', getMessages())
+
+
 
 
 
