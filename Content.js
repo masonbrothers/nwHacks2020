@@ -10,11 +10,18 @@
 */
 
 $(window).on('load', function(){
-    window.setTimeout(getMessages, 5000)});
+    window.setTimeout(getMessages, 1000)});
+
+
+
+let observer = new MutationObserver(getMessages)
+
+let config = {attributes:true, childList:true,characterData:true}
 
 
 function getMessages(){
-    var messages = [];
+    observer.disconnect()
+
     var JSONMessages = [];
     document.getElementsByClassName('uiScrollableAreaContent')[2].querySelector('div').querySelectorAll('.direction_ltr, .text_align_ltr')
         .forEach(function(div) {
@@ -24,23 +31,16 @@ function getMessages(){
                     //messages.push(query.innerText)
                     JSONMessages.push(JSON.stringify(query.innerText))
                     sendSingular((query.innerText),div)
+
                 }
                 
             })
-            let length = messages.length
-            /*for (var i = 0; i<length;i++) {
-                JSONMessages[i] = JSON.stringify(messages[i]);
-            }
-            //sendToPython(JSONMessages, div); */
+observer.observe(div,config)
 }
 
-function sendToPython(messages, div)
-{
-    for(var i = 0; i<messages.length;i++) {
-        sendSingular(messages[i], div)
-        ;
-    }
-}
+
+
+
 
 function sendSingular(text, div){
     const xhttp = new XMLHttpRequest();
