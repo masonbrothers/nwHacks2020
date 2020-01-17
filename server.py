@@ -6,7 +6,7 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 def get_emotion(text):
     
-    authenticator = IAMAuthenticator('YhhKS3QwimiLpt-d1WGsXQh2l0OaOiPGe15JXdPhvvTl')
+    authenticator = IAMAuthenticator('get A new API key bois')
     tone_analyzer = ToneAnalyzerV3(
         version='2017-09-21',
         authenticator=authenticator
